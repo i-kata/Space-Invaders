@@ -16,6 +16,7 @@ int main()
     window.setFramerateLimit(30);
 
     sf::Event event;
+    //test
 
     while (window.isOpen())
     {
