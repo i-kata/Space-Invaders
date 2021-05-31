@@ -1,22 +1,36 @@
 #include "Projectile.h"
 
-Projectile::Projectile(SpaceShip & ship)
+Projectile::Projectile(int x, int y)
 {
     projectileShape.setSize(sf::Vector2f(30, 30));
     projectileShape.setOrigin(15, 15);
     projectileShape.setFillColor(sf::Color::Blue);
-    projectileShape.setPosition(ship.getLocation().x, ship.getLocation().y + 30);
+    projectileLoc.x = x;
+    projectileLoc.y = y;
+    projectileShape.setPosition(projectileLoc.x, projectileLoc.y);
 }
 
 void Projectile::shoot()
 {
-    while (projectileLoc.y > 0)
+    projectileLoc.y -= 2;
+    projectileShape.setPosition(projectileLoc.x, projectileLoc.y);
+}
+
+void Projectile::overboard(std::vector<Projectile> &projectiles)
+{
+    for (auto p = 0; p < projectiles.size(); p++)
     {
-        projectileLoc.x -= 2;
+        if (projectiles[p].getLocation().y < 0)
+            projectiles.erase(projectiles.begin() + p);
     }
 }
 
 sf::RectangleShape Projectile::getShape()
 {
     return projectileShape;
+}
+
+Location Projectile::getLocation()
+{
+    return projectileLoc;
 }

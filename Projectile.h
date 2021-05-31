@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "SpaceShip.h"
+#include "Location.h"
 
 #ifndef TEST_SFML_PROJECTILE_H
 #define TEST_SFML_PROJECTILE_H
@@ -10,9 +10,11 @@ class Projectile
     Location projectileLoc;
 
 public:
-    explicit Projectile(SpaceShip & ship);
+    explicit Projectile(int x, int y);
     void shoot();
     sf::RectangleShape getShape();
+    Location getLocation();
+    void overboard(std::vector<Projectile> & projectiles);
 };
 
 #endif
