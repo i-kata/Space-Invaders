@@ -5,7 +5,6 @@ SpaceShip::SpaceShip(Location &loc) : shipLoc(loc)
     shipShape.setPosition(shipLoc.x, shipLoc.y);
     shipShape.setFillColor(sf::Color::Red);
     shipShape.setSize(sf::Vector2f(30, 30));
-    shipShape.setOrigin(15, 15);
 }
 
 void SpaceShip::moveShip(int x)

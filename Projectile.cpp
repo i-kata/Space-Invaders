@@ -2,8 +2,7 @@
 
 Projectile::Projectile(int x, int y)
 {
-    projectileShape.setSize(sf::Vector2f(30, 30));
-    projectileShape.setOrigin(15, 15);
+    projectileShape.setSize(sf::Vector2f(10, 30));
     projectileShape.setFillColor(sf::Color::Blue);
     projectileLoc.x = x;
     projectileLoc.y = y;
@@ -18,7 +17,7 @@ void Projectile::shoot()
 
 void Projectile::overboard(std::vector<Projectile> &projectiles)
 {
-    for (auto p = 0; p < projectiles.size(); p++)
+    for (size_t p = 0; p < projectiles.size(); p++)
     {
         if (projectiles[p].getLocation().y < 0)
             projectiles.erase(projectiles.begin() + p);
