@@ -15,7 +15,7 @@ int main()
     std::vector<Projectile> enemyProjectiles;
     std::vector<Enemy> enemies;
 
-    controller.spawnEnemies(enemies);
+    controller.spawnEnemiesnR(enemies);
 
     sf::RenderWindow window(sf::VideoMode(600, 600), "Space Invaders");
     window.setFramerateLimit(30);
@@ -25,14 +25,19 @@ int main()
     while (window.isOpen())
     {
         controller.controlEvents(window, event, ship, shipProjectiles);
+        controller.projectilesHit(shipProjectiles, enemies);
 
         window.clear();
         window.draw(ship.getShape());
-        for (auto & p : shipProjectiles)
+
+        if (shipProjectiles.size() > 0)
         {
-            window.draw(p.getShape());
-            p.shoot();
-            p.overboard(shipProjectiles);
+            for (auto & p : shipProjectiles)
+            {
+                window.draw(p.getShape());
+                p.shoot();
+                p.overboard(shipProjectiles);
+            }
         }
 
         if (enemies.size() > 0)
@@ -42,8 +47,6 @@ int main()
                 window.draw(e.getShape());
             }
         }
-
-        controller.projectilesHit(shipProjectiles, enemies);
 
         window.display();
     }

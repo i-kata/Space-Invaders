@@ -17,11 +17,6 @@ void Enemy::move(Location & loc)
     enemyShape.setPosition(enemyLoc.x, enemyLoc.y);
 }
 
-float Enemy::getHealth()
-{
-    return health;
-}
-
 Location Enemy::getLocation()
 {
     return enemyLoc;
@@ -32,4 +27,18 @@ sf::RectangleShape Enemy::getShape()
     return enemyShape;
 }
 
+int Enemy::getHealth()
+{
+    return health;
+}
+
+void Enemy::gotHit()
+{
+    health = health - 2;
+}
+
+void Enemy::enemyEstHealth(int hlth)
+{
+    health = hlth;
+}
 

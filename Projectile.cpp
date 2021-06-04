@@ -2,7 +2,7 @@
 
 Projectile::Projectile(int x, int y)
 {
-    projectileShape.setSize(sf::Vector2f(10, 30));
+    projectileShape.setSize(sf::Vector2f(30, 30));
     projectileShape.setFillColor(sf::Color::Blue);
     projectileLoc.x = x;
     projectileLoc.y = y;
@@ -11,7 +11,7 @@ Projectile::Projectile(int x, int y)
 
 void Projectile::shoot()
 {
-    projectileLoc.y -= 2;
+    projectileLoc.y -= 10;
     projectileShape.setPosition(projectileLoc.x, projectileLoc.y);
 }
 

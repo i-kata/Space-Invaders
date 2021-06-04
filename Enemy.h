@@ -10,16 +10,16 @@ class Enemy
 {
     sf::RectangleShape enemyShape;
     Location enemyLoc;
-    float health = 4;
-    float defense;
+    int health;
 
 public:
-    Enemy(Location & loc);
+    explicit Enemy(Location & loc);
     void move(Location & loc);
-    void attack();
     Location getLocation();
-    float getHealth();
     sf::RectangleShape getShape();
+    int getHealth();
+    void gotHit();
+    void enemyEstHealth(int hlth);
 };
 
 

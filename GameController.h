@@ -13,6 +13,7 @@ public:
     void controlEvents(sf::RenderWindow & window, sf::Event & event, SpaceShip & ship, std::vector<Projectile> & projectiles);
     void projectilesHit(std::vector<Projectile> & projectiles, std::vector<Enemy> & enemies);
     void spawnEnemies(std::vector<Enemy> & enemies);
+    void spawnEnemiesnR(std::vector<Enemy> & enemies);
 };
 
 #endif

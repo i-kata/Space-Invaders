@@ -22,3 +22,13 @@ Location SpaceShip::getLocation()
 {
     return shipLoc;
 }
+
+int SpaceShip::getShipDir()
+{
+    return shipDir;
+}
+
+void SpaceShip::changeShipDir(int dir)
+{
+    shipDir = dir;
+}
