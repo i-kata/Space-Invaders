@@ -11,7 +11,8 @@ class Projectile
 
 public:
     explicit Projectile(int x, int y);
-    void shoot();
+    void shootShip();
+    void shootEnemy();
     sf::RectangleShape getShape();
     Location getLocation();
     void overboard(std::vector<Projectile> & projectiles);

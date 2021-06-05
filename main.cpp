@@ -22,6 +22,10 @@ int main()
 
     sf::Event event;
 
+    clock_t beginTime = clock();
+    float duration;
+    int executed = 0;
+
     while (window.isOpen())
     {
         controller.controlEvents(window, event, ship, shipProjectiles);
@@ -30,17 +34,30 @@ int main()
         window.clear();
         window.draw(ship.getShape());
 
-        if (shipProjectiles.size() > 0)
+        if (!shipProjectiles.empty())
         {
             for (auto & p : shipProjectiles)
             {
                 window.draw(p.getShape());
-                p.shoot();
+                p.shootShip();
                 p.overboard(shipProjectiles);
             }
         }
 
-        if (enemies.size() > 0)
+        if (!enemyProjectiles.empty())
+        {
+            for (auto & ep : enemyProjectiles)
+            {
+                window.draw(ep.getShape());
+                ep.shootEnemy();
+                ep.overboard(enemyProjectiles);
+            }
+        }
+
+        int randNum = rand() % 30;
+        enemies[randNum].enemyShoot(enemies[randNum].getLocation(), enemyProjectiles);
+
+        if (!enemies.empty())
         {
             for (auto & e : enemies)
             {
@@ -49,5 +66,9 @@ int main()
         }
 
         window.display();
+
+        controller.moveEnemies(enemies, duration, executed);
+
+        duration = (clock() - beginTime) / (float) CLOCKS_PER_SEC;
     }
 }

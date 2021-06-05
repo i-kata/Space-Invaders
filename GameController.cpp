@@ -119,15 +119,95 @@ void GameController::spawnEnemies(std::vector<Enemy> &enemies)
 
 void GameController::spawnEnemiesnR(std::vector<Enemy> &enemies)
 {
-    for (size_t i = 30; i < 600; i += 105)
+    for (int row = 2; row >= 0; row--)
     {
-        Location newEnemyLoc;
-        newEnemyLoc.x = i;
-        newEnemyLoc.y = 30;
+        for (size_t i = 0; i < 10; i++)
+        {
+            Location newEnemyLoc;
+            newEnemyLoc.x = 60 + i * 50;
+            newEnemyLoc.y = 30 + row * 60;
 
-        Enemy newEnemy(newEnemyLoc);
-        newEnemy.enemyEstHealth(4);
+            Enemy newEnemy(newEnemyLoc);
+            newEnemy.enemyEstHealth(4);
 
-        enemies.push_back(newEnemy);
+            enemies.push_back(newEnemy);
+        }
     }
 }
+
+void GameController::moveEnemiesForward(std::vector<Enemy> &enemies)
+{
+    Location moveLoc;
+    moveLoc.x = 0;
+    moveLoc.y = 30;
+
+    for (size_t i = 0; i < enemies.size(); i++)
+    {
+        enemies[i].move(moveLoc);
+    }
+}
+
+void GameController::moveEnemiesLeft(std::vector<Enemy> &enemies)
+{
+    Location moveLoc;
+    moveLoc.x = -30;
+    moveLoc.y = 30;
+
+    for (size_t i = 0; i < enemies.size(); i++)
+    {
+        enemies[i].move(moveLoc);
+    }
+}
+
+void GameController::moveEnemiesRight(std::vector<Enemy> &enemies)
+{
+    Location moveLoc;
+    moveLoc.x = 30;
+    moveLoc.y = 30;
+
+    for (size_t i = 0; i < enemies.size(); i++)
+    {
+        enemies[i].move(moveLoc);
+    }
+}
+
+void GameController::moveEnemies(std::vector<Enemy> &enemies, float duration, int & executed)
+{
+    if (duration >= 4.95 and duration <= 5.05 and executed < 1)
+    {
+        moveEnemiesForward(enemies);
+        executed++;
+    }
+
+    if (duration >= 7.45 and duration <= 7.55 and executed < 2)
+    {
+        moveEnemiesLeft(enemies);
+        executed++;
+    }
+
+    if (duration >= 9.95 and duration <= 10.05 and executed < 3)
+    {
+        moveEnemiesRight(enemies);
+        executed++;
+    }
+
+    if (duration >= 11.95 and duration <= 12.05 and executed < 4)
+    {
+        moveEnemiesForward(enemies);
+        executed++;
+    }
+
+    if (duration >= 15.45 and duration <= 15.55 and executed < 5)
+    {
+        moveEnemiesRight(enemies);
+        executed++;
+    }
+
+    if (duration >= 17.95 and duration <= 18.05 and executed < 6)
+    {
+        moveEnemiesLeft(enemies);
+        executed++;
+    }
+}
+
+

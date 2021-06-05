@@ -14,12 +14,13 @@ class Enemy
 
 public:
     explicit Enemy(Location & loc);
-    void move(Location & loc);
+    void move(Location loc);
     Location getLocation();
     sf::RectangleShape getShape();
     int getHealth();
     void gotHit();
     void enemyEstHealth(int hlth);
+    void enemyShoot(Location enemyShootingLoc, std::vector<Projectile> & enemyProjectiles);
 };
 
 

@@ -14,6 +14,10 @@ public:
     void projectilesHit(std::vector<Projectile> & projectiles, std::vector<Enemy> & enemies);
     void spawnEnemies(std::vector<Enemy> & enemies);
     void spawnEnemiesnR(std::vector<Enemy> & enemies);
+    void moveEnemiesForward(std::vector<Enemy> & enemies);
+    void moveEnemiesLeft(std::vector<Enemy> & enemies);
+    void moveEnemiesRight(std::vector<Enemy> & enemies);
+    void moveEnemies(std::vector<Enemy> & enemies, float duration, int & executed);
 };
 
 #endif

@@ -10,10 +10,10 @@ Enemy::Enemy(Location &loc)
     enemyShape.setFillColor(sf::Color::Cyan);
 }
 
-void Enemy::move(Location & loc)
+void Enemy::move(Location loc)
 {
-    enemyLoc.x = loc.x;
-    enemyLoc.y = loc.y;
+    enemyLoc.x += loc.x;
+    enemyLoc.y += loc.y;
     enemyShape.setPosition(enemyLoc.x, enemyLoc.y);
 }
 
@@ -40,5 +40,11 @@ void Enemy::gotHit()
 void Enemy::enemyEstHealth(int hlth)
 {
     health = hlth;
+}
+
+void Enemy::enemyShoot(Location enemyShootingLoc, std::vector<Projectile> &enemyProjectiles)
+{
+    Projectile enemyProjectile(enemyShootingLoc.x, enemyShootingLoc.y);
+    enemyProjectiles.push_back(enemyProjectile);
 }
 
