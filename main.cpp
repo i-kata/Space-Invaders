@@ -4,18 +4,22 @@
 #include "GameController.h"
 #include "Projectile.h"
 #include "Enemy.h"
+#include "Barier.h"
 #include "Location.h"
 
 int main()
 {
+    srand(time(NULL));
     Location shipLoc; shipLoc.x = 300; shipLoc.y = 565;
     SpaceShip ship(shipLoc);
     GameController controller;
     std::vector<Projectile> shipProjectiles;
     std::vector<Projectile> enemyProjectiles;
     std::vector<Enemy> enemies;
+    std::vector<Barier> bariers;
 
     controller.spawnEnemiesnR(enemies);
+    controller.spawnBariers(bariers);
 
     sf::RenderWindow window(sf::VideoMode(600, 600), "Space Invaders");
     window.setFramerateLimit(30);
@@ -34,7 +38,7 @@ int main()
         window.clear();
         window.draw(ship.getShape());
 
-        if (!shipProjectiles.empty())
+        if (not shipProjectiles.empty())
         {
             for (auto & p : shipProjectiles)
             {
@@ -44,7 +48,13 @@ int main()
             }
         }
 
-        if (!enemyProjectiles.empty())
+        if (not bariers.empty())
+        {
+            for (auto & b : bariers)
+                window.draw(b.getShape());
+        }
+
+        if (not enemyProjectiles.empty())
         {
             for (auto & ep : enemyProjectiles)
             {
@@ -54,10 +64,7 @@ int main()
             }
         }
 
-        int randNum = rand() % 30;
-        enemies[randNum].enemyShoot(enemies[randNum].getLocation(), enemyProjectiles);
-
-        if (!enemies.empty())
+        if (not enemies.empty())
         {
             for (auto & e : enemies)
             {
@@ -69,6 +76,14 @@ int main()
 
         controller.moveEnemies(enemies, duration, executed);
 
-        duration = (clock() - beginTime) / (float) CLOCKS_PER_SEC;
+        int randNum = rand() % 200;
+
+        if (randNum < 30)
+        {
+            enemies[randNum].enemyShoot(enemies[randNum].getLocation(), enemyProjectiles);
+        }
+
+        duration = (clock() - beginTime) / (double) CLOCKS_PER_SEC;
+
     }
 }

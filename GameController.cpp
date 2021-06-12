@@ -17,7 +17,7 @@ void GameController::controlEvents(sf::RenderWindow & window, sf::Event & event,
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
                     if (ship.getShipDir() == 0)
-                        ship.moveShip(-15);
+                        ship.moveShip(-15 / 30);
 
                     ship.moveShip(-15);
                     ship.changeShipDir(1);
@@ -208,6 +208,22 @@ void GameController::moveEnemies(std::vector<Enemy> &enemies, float duration, in
         moveEnemiesLeft(enemies);
         executed++;
     }
+}
+
+void GameController::spawnBariers(std::vector<Barier> &bariers)
+{
+    Barier barier1;
+    barier1.setPosition(37.5, 510);
+
+    Barier barier2;
+    barier2.setPosition(225, 510);
+
+    Barier barier3;
+    barier3.setPosition(412.5, 510);
+
+    bariers.push_back(barier1);
+    bariers.push_back(barier2);
+    bariers.push_back(barier3);
 }
 
 

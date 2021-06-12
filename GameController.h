@@ -3,6 +3,7 @@
 #include "SpaceShip.h"
 #include "Projectile.h"
 #include "Enemy.h"
+#include "Barier.h"
 
 #ifndef TEST_SFML_GAMECONTROLLER_H
 #define TEST_SFML_GAMECONTROLLER_H
@@ -18,6 +19,7 @@ public:
     void moveEnemiesLeft(std::vector<Enemy> & enemies);
     void moveEnemiesRight(std::vector<Enemy> & enemies);
     void moveEnemies(std::vector<Enemy> & enemies, float duration, int & executed);
+    void spawnBariers(std::vector<Barier> & bariers);
 };
 
 #endif
