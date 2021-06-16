@@ -10,9 +10,15 @@
 int main()
 {
     srand(time(NULL));
+    bool gameRunning = true;
+    sf::Event event;
+    clock_t beginTime = clock();
+    float duration;
+    int executed = 0;
     Location shipLoc; shipLoc.x = 300; shipLoc.y = 565;
     SpaceShip ship(shipLoc);
     GameController controller;
+
     std::vector<Projectile> shipProjectiles;
     std::vector<Projectile> enemyProjectiles;
     std::vector<Enemy> enemies;
@@ -23,12 +29,6 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(600, 600), "Space Invaders");
     window.setFramerateLimit(30);
-
-    sf::Event event;
-
-    clock_t beginTime = clock();
-    float duration;
-    int executed = 0;
 
     while (window.isOpen())
     {
@@ -76,13 +76,14 @@ int main()
 
         controller.moveEnemies(enemies, duration, executed);
 
-        int randNum = rand() % 200;
+        int randNum = rand() % 300;
 
         if (randNum < 30)
         {
             enemies[randNum].enemyShoot(enemies[randNum].getLocation(), enemyProjectiles);
         }
 
+        controller.bariesCollision(shipProjectiles, enemyProjectiles, bariers);
         controller.moveBariers(bariers);
 
         duration = (clock() - beginTime) / (double) CLOCKS_PER_SEC;

@@ -2,7 +2,7 @@
 
 Barier::Barier()
 {
-    barierShape.setSize(sf::Vector2f(150, 30));
+    barierShape.setSize(sf::Vector2f(100, 30));
     barierShape.setFillColor(sf::Color::Yellow);
 }
 

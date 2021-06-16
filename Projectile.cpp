@@ -11,13 +11,13 @@ Projectile::Projectile(int x, int y)
 
 void Projectile::shootShip()
 {
-    projectileLoc.y -= 10;
+    projectileLoc.y -= 15;
     projectileShape.setPosition(projectileLoc.x, projectileLoc.y);
 }
 
 void Projectile::shootEnemy()
 {
-    projectileLoc.y += 10;
+    projectileLoc.y += 15;
     projectileShape.setPosition(projectileLoc.x, projectileLoc.y);
 }
 

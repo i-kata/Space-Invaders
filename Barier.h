@@ -12,7 +12,6 @@ class Barier
 public:
     Barier();
     Location getLocation();
-    void destroyed(std::vector<Barier> & bariers);
     void setPosition(int x, int y);
     sf::RectangleShape getShape();
     int getDirection();

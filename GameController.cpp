@@ -213,13 +213,13 @@ void GameController::moveEnemies(std::vector<Enemy> &enemies, float duration, in
 void GameController::spawnBariers(std::vector<Barier> &bariers)
 {
     Barier barier1;
-    barier1.setPosition(37, 510);
+    barier1.setPosition(80, 510);
 
     Barier barier2;
-    barier2.setPosition(225, 510);
+    barier2.setPosition(250, 510);
 
     Barier barier3;
-    barier3.setPosition(413, 510);
+    barier3.setPosition(420, 510);
 
     bariers.push_back(barier1);
     bariers.push_back(barier2);
@@ -242,16 +242,46 @@ void GameController::moveBariers(std::vector<Barier> & bariers)
         }
     }
 
-    if (bariers[2].getLocation().x < 450 and bariers[0].getDirection() == 0)
+    if (bariers[2].getLocation().x < 500 and bariers[0].getDirection() == 0)
     {
         for (size_t i = 0; i < bariers.size(); i++)
         {
             bariers[i].setPosition(bariers[i].getLocation().x + 1, 510);
         }
 
-        if (bariers[2].getLocation().x == 450)
+        if (bariers[2].getLocation().x == 500)
         {
             bariers[0].setDirection(1);
+        }
+    }
+}
+
+void GameController::bariesCollision(std::vector<Projectile> &shipProjectiles, std::vector<Projectile> & enemyProjectiles, std::vector<Barier> & bariers)
+{
+    for (size_t barier = 0; barier < bariers.size(); barier++)
+    {
+        for (size_t sprojectile = 0; sprojectile < shipProjectiles.size(); sprojectile++)
+        {
+            if (shipProjectiles[sprojectile].getLocation().y >= bariers[barier].getLocation().y and
+                shipProjectiles[sprojectile].getLocation().y <= bariers[barier].getLocation().y + 30 and
+                shipProjectiles[sprojectile].getLocation().x >= bariers[barier].getLocation().x and
+                shipProjectiles[sprojectile].getLocation().x <= bariers[barier].getLocation().x + 100)
+            {
+                shipProjectiles.erase(shipProjectiles.begin() + sprojectile);
+            }
+        }
+    }
+
+    for (size_t barier = 0; barier < bariers.size(); barier++)
+    {
+        for (size_t eprojectile = 0; eprojectile < enemyProjectiles.size(); eprojectile++)
+        {
+            if (enemyProjectiles[eprojectile].getLocation().y + 30 >= bariers[barier].getLocation().y and
+                enemyProjectiles[eprojectile].getLocation().x >= bariers[barier].getLocation().x and
+                enemyProjectiles[eprojectile].getLocation().x <= bariers[barier].getLocation().x + 100)
+            {
+                enemyProjectiles.erase(enemyProjectiles.begin() + eprojectile);
+            }
         }
     }
 }
