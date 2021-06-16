@@ -213,17 +213,47 @@ void GameController::moveEnemies(std::vector<Enemy> &enemies, float duration, in
 void GameController::spawnBariers(std::vector<Barier> &bariers)
 {
     Barier barier1;
-    barier1.setPosition(37.5, 510);
+    barier1.setPosition(37, 510);
 
     Barier barier2;
     barier2.setPosition(225, 510);
 
     Barier barier3;
-    barier3.setPosition(412.5, 510);
+    barier3.setPosition(413, 510);
 
     bariers.push_back(barier1);
     bariers.push_back(barier2);
     bariers.push_back(barier3);
+}
+
+void GameController::moveBariers(std::vector<Barier> & bariers)
+{
+    if (bariers[0].getLocation().x > 0 and bariers[0].getDirection() == 1)
+    {
+        for (size_t i = 0; i < bariers.size(); i++)
+        {
+            bariers[i].setPosition(bariers[i].getLocation().x - 1, 510);
+        }
+
+        if (bariers[0].getLocation().x == 0)
+        {
+            for (auto &b : bariers)
+                b.setDirection(0);
+        }
+    }
+
+    if (bariers[2].getLocation().x < 450 and bariers[0].getDirection() == 0)
+    {
+        for (size_t i = 0; i < bariers.size(); i++)
+        {
+            bariers[i].setPosition(bariers[i].getLocation().x + 1, 510);
+        }
+
+        if (bariers[2].getLocation().x == 450)
+        {
+            bariers[0].setDirection(1);
+        }
+    }
 }
 
 

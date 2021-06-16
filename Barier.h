@@ -7,15 +7,16 @@
 class Barier
 {
     sf::RectangleShape barierShape;
-    Location barerLoc;
-    int barierLife;
+    Location barierLoc;
+    int barierDir = 1; // 1 = Left, 0 = Right
 public:
     Barier();
     Location getLocation();
     void destroyed(std::vector<Barier> & bariers);
-    int getLife();
-    void setPosition(float x, float y);
+    void setPosition(int x, int y);
     sf::RectangleShape getShape();
+    int getDirection();
+    void setDirection(int dir);
 };
 
 

@@ -83,6 +83,8 @@ int main()
             enemies[randNum].enemyShoot(enemies[randNum].getLocation(), enemyProjectiles);
         }
 
+        controller.moveBariers(bariers);
+
         duration = (clock() - beginTime) / (double) CLOCKS_PER_SEC;
 
     }

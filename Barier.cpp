@@ -6,9 +6,12 @@ Barier::Barier()
     barierShape.setFillColor(sf::Color::Yellow);
 }
 
-void Barier::setPosition(float x, float y)
+
+void Barier::setPosition(int x, int y)
 {
     barierShape.setPosition(x, y);
+    barierLoc.x = x;
+    barierLoc.y = y;
 }
 
 sf::RectangleShape Barier::getShape()
@@ -18,10 +21,15 @@ sf::RectangleShape Barier::getShape()
 
 Location Barier::getLocation()
 {
-    return barerLoc;
+    return barierLoc;
 }
 
-int Barier::getLife()
+int Barier::getDirection()
 {
-    return barierLife;
+    return barierDir;
+}
+
+void Barier::setDirection(int dir)
+{
+    barierDir = dir;
 }

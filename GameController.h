@@ -20,6 +20,7 @@ public:
     void moveEnemiesRight(std::vector<Enemy> & enemies);
     void moveEnemies(std::vector<Enemy> & enemies, float duration, int & executed);
     void spawnBariers(std::vector<Barier> & bariers);
+    void moveBariers(std::vector<Barier> & bariers);
 };
 
 #endif
