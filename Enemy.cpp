@@ -44,7 +44,7 @@ void Enemy::enemyEstHealth(int hlth)
 
 void Enemy::enemyShoot(Location enemyShootingLoc, std::vector<Projectile> &enemyProjectiles)
 {
-    Projectile enemyProjectile(enemyShootingLoc.x, enemyShootingLoc.y);
+    Projectile enemyProjectile(enemyShootingLoc.x + 15, enemyShootingLoc.y);
     enemyProjectiles.push_back(enemyProjectile);
 }
 

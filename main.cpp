@@ -6,11 +6,14 @@
 #include "Enemy.h"
 #include "Barier.h"
 #include "Location.h"
+#include "FinalBoss.h"
 
 int main()
 {
     srand(time(NULL));
-    bool gameRunning = true;
+    bool mainWindow = false;
+    bool firstStage = true;
+    bool bossStage = false;
     sf::Event event;
     clock_t beginTime = clock();
     float duration;
@@ -18,6 +21,7 @@ int main()
     Location shipLoc; shipLoc.x = 300; shipLoc.y = 565;
     SpaceShip ship(shipLoc);
     GameController controller;
+    FinalBoss finalBoss;
 
     std::vector<Projectile> shipProjectiles;
     std::vector<Projectile> enemyProjectiles;
@@ -32,10 +36,8 @@ int main()
 
     while (window.isOpen())
     {
-        controller.controlEvents(window, event, ship, shipProjectiles);
-        controller.projectilesHit(shipProjectiles, enemies);
-
         window.clear();
+
         window.draw(ship.getShape());
 
         if (not shipProjectiles.empty())
@@ -72,21 +74,31 @@ int main()
             }
         }
 
-        window.display();
-
-        controller.moveEnemies(enemies, duration, executed);
-
-        int randNum = rand() % 300;
-
-        if (randNum < 30)
+        if (not enemies.empty())
         {
-            enemies[randNum].enemyShoot(enemies[randNum].getLocation(), enemyProjectiles);
+            int randNum = rand() % (enemies.size() * 10);
+            if (randNum < enemies.size())
+            {
+                enemies[randNum].enemyShoot(enemies[randNum].getLocation(), enemyProjectiles);
+            }
         }
 
+        controller.controlEvents(window, event, ship, shipProjectiles);
+        controller.projectilesHit(shipProjectiles, enemies);
         controller.bariesCollision(shipProjectiles, enemyProjectiles, bariers);
+        controller.spaceshipHit(ship, enemyProjectiles, firstStage);
         controller.moveBariers(bariers);
+        controller.moveEnemies(enemies, duration, executed);
+
+        if (enemies.empty())
+        {
+            window.draw(finalBoss.getShape());
+            controller.finalBossHit(finalBoss, shipProjectiles);
+            finalBoss.fBmoveRandom();
+        }
 
         duration = (clock() - beginTime) / (double) CLOCKS_PER_SEC;
 
+        window.display();
     }
 }

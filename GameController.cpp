@@ -17,18 +17,18 @@ void GameController::controlEvents(sf::RenderWindow & window, sf::Event & event,
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
                     if (ship.getShipDir() == 0)
-                        ship.moveShip(-15 / 30);
+                        ship.moveShip(-10);
 
-                    ship.moveShip(-15);
+                    ship.moveShip(-10);
                     ship.changeShipDir(1);
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
                     if (ship.getShipDir() == 1)
-                        ship.moveShip(15);
+                        ship.moveShip(10);
 
-                    ship.moveShip(15);
+                    ship.moveShip(10);
                     ship.changeShipDir(0);
                 }
 
@@ -37,21 +37,6 @@ void GameController::controlEvents(sf::RenderWindow & window, sf::Event & event,
                     Projectile p(ship.getLocation().x + 15, ship.getLocation().y - 30);
                     projectiles.push_back(p);
                 }
-
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) and sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-                {
-                    ship.moveShip(-15);
-                    Projectile p(ship.getLocation().x + 15, ship.getLocation().y - 30);
-                    projectiles.push_back(p);
-                }
-
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) and sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-                {
-                    ship.moveShip(15);
-                    Projectile p(ship.getLocation().x + 15, ship.getLocation().y - 30);
-                    projectiles.push_back(p);
-                }
-
                 break;
 
             default:
@@ -66,10 +51,9 @@ void GameController::projectilesHit(std::vector<Projectile> &projectiles, std::v
     {
         for (size_t proj = 0; proj < projectiles.size(); proj++)
         {
-            if (projectiles[proj].getLocation().x >= enemies[enemy].getLocation().x - 12 and
-                projectiles[proj].getLocation().x <= enemies[enemy].getLocation().x + 42 and
-                projectiles[proj].getLocation().y <= enemies[enemy].getLocation().y + 12 and
-                projectiles[proj].getLocation().y >= enemies[enemy].getLocation().y - 12)
+            if (projectiles[proj].getLocation().x >= enemies[enemy].getLocation().x - 10 and
+                projectiles[proj].getLocation().x <= enemies[enemy].getLocation().x + 40 and
+                projectiles[proj].getLocation().y <= enemies[enemy].getLocation().y + 30)
             {
                 enemies[enemy].gotHit();
                 if (enemies[enemy].getHealth() == 0)
@@ -282,6 +266,34 @@ void GameController::bariesCollision(std::vector<Projectile> &shipProjectiles, s
             {
                 enemyProjectiles.erase(enemyProjectiles.begin() + eprojectile);
             }
+        }
+    }
+}
+
+void GameController::spaceshipHit(SpaceShip &spaceShip, std::vector<Projectile> &enemyProjectiles, bool &gameRunning)
+{
+    for (size_t p = 0; p < enemyProjectiles.size(); p++)
+    {
+        if (enemyProjectiles[p].getLocation().y + 30 >= spaceShip.getLocation().y and
+            enemyProjectiles[p].getLocation().x >= spaceShip.getLocation().x and
+            enemyProjectiles[p].getLocation().x <= spaceShip.getLocation().x + 30)
+        {
+            gameRunning = false;
+            enemyProjectiles.erase(enemyProjectiles.begin() + p);
+        }
+    }
+}
+
+void GameController::finalBossHit(FinalBoss &finalBoss, std::vector<Projectile> &shipProjectiles)
+{
+    for (size_t p = 0; p < shipProjectiles.size(); p++)
+    {
+        if (shipProjectiles[p].getLocation().y <= finalBoss.getLocation().y + 100 and
+            shipProjectiles[p].getLocation().x >= finalBoss.getLocation().x and
+            shipProjectiles[p].getLocation().x <= finalBoss.getLocation().x + 200)
+        {
+            finalBoss.fBHit(2);
+            shipProjectiles.erase(shipProjectiles.begin() + p);
         }
     }
 }

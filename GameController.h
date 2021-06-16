@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "Enemy.h"
 #include "Barier.h"
+#include "FinalBoss.h"
 
 #ifndef TEST_SFML_GAMECONTROLLER_H
 #define TEST_SFML_GAMECONTROLLER_H
@@ -22,6 +23,8 @@ public:
     void spawnBariers(std::vector<Barier> & bariers);
     void moveBariers(std::vector<Barier> & bariers);
     void bariesCollision(std::vector<Projectile> & shipProjectiles, std::vector<Projectile> & enemyProjectiles,std::vector<Barier> & bariers);
+    void spaceshipHit(SpaceShip & spaceShip, std::vector<Projectile> & enemyProjectiles, bool &gameRunning);
+    void finalBossHit(FinalBoss &finalBoss, std::vector<Projectile> &shipProjectiles);
 };
 
 #endif

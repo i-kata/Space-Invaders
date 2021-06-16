@@ -31,7 +31,7 @@ endif(WIN32)
 # wcześniej katalogów - nie ma potrzeby robienia potem if-a dla target_link_libraries
 find_package(SFML 2 COMPONENTS graphics audio REQUIRED)
 
-add_executable(MyApp main.cpp SpaceShip.cpp SpaceShip.h Location.h GameController.cpp GameController.h Projectile.cpp Projectile.h Enemy.cpp Enemy.h Barier.cpp Barier.h)
+add_executable(MyApp main.cpp SpaceShip.cpp SpaceShip.h Location.h GameController.cpp GameController.h Projectile.cpp Projectile.h Enemy.cpp Enemy.h Barier.cpp Barier.h FinalBoss.cpp FinalBoss.h)
 
 target_link_libraries(MyApp sfml-graphics sfml-audio)
 
