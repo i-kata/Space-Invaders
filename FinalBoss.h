@@ -13,7 +13,8 @@ class FinalBoss
 
 public:
     FinalBoss();
-    void fBmoveRandom();
+    void fBmove();
+    bool isOverBoard();
     void fBHit(int damage);
     void fBshootNormProj(std::vector<Projectile> &fBprojectiles);
     sf::RectangleShape getShape();

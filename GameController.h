@@ -22,7 +22,7 @@ public:
     void moveEnemies(std::vector<Enemy> & enemies, float duration, int & executed);
     void spawnBariers(std::vector<Barier> & bariers);
     void moveBariers(std::vector<Barier> & bariers);
-    void bariesCollision(std::vector<Projectile> & shipProjectiles, std::vector<Projectile> & enemyProjectiles,std::vector<Barier> & bariers);
+    void bariesCollision(std::vector<Projectile> & shipProjectiles, std::vector<Projectile> & enemyProjectiles, std::vector<Projectile> &finalBossProjectiles, std::vector<Barier> & bariers);
     void spaceshipHit(SpaceShip & spaceShip, std::vector<Projectile> & enemyProjectiles, bool &gameRunning);
     void finalBossHit(FinalBoss &finalBoss, std::vector<Projectile> &shipProjectiles);
 };

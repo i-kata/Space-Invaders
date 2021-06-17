@@ -16,23 +16,16 @@ void GameController::controlEvents(sf::RenderWindow & window, sf::Event & event,
             case sf::Event::KeyPressed:
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
-                    if (ship.getShipDir() == 0)
-                        ship.moveShip(-10);
-
-                    ship.moveShip(-10);
-                    ship.changeShipDir(1);
+                        ship.moveShip(-30);
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
-                    if (ship.getShipDir() == 1)
-                        ship.moveShip(10);
 
-                    ship.moveShip(10);
-                    ship.changeShipDir(0);
+                    ship.moveShip(30);
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
                 {
                     Projectile p(ship.getLocation().x + 15, ship.getLocation().y - 30);
                     projectiles.push_back(p);
@@ -240,7 +233,7 @@ void GameController::moveBariers(std::vector<Barier> & bariers)
     }
 }
 
-void GameController::bariesCollision(std::vector<Projectile> &shipProjectiles, std::vector<Projectile> & enemyProjectiles, std::vector<Barier> & bariers)
+void GameController::bariesCollision(std::vector<Projectile> & shipProjectiles, std::vector<Projectile> & enemyProjectiles, std::vector<Projectile> &finalBossProjectiles, std::vector<Barier> & bariers)
 {
     for (size_t barier = 0; barier < bariers.size(); barier++)
     {
@@ -265,6 +258,22 @@ void GameController::bariesCollision(std::vector<Projectile> &shipProjectiles, s
                 enemyProjectiles[eprojectile].getLocation().x <= bariers[barier].getLocation().x + 100)
             {
                 enemyProjectiles.erase(enemyProjectiles.begin() + eprojectile);
+            }
+        }
+    }
+
+    if (not finalBossProjectiles.empty())
+    {
+        for (size_t barier = 0; barier < bariers.size(); barier++)
+        {
+            for (size_t fBprojectile = 0; fBprojectile < finalBossProjectiles.size(); fBprojectile++)
+            {
+                if (finalBossProjectiles[fBprojectile].getLocation().y + 30 >= bariers[barier].getLocation().y and
+                    finalBossProjectiles[fBprojectile].getLocation().x >= bariers[barier].getLocation().x and
+                    finalBossProjectiles[fBprojectile].getLocation().x <= bariers[barier].getLocation().x + 100)
+                {
+                    finalBossProjectiles.erase(finalBossProjectiles.begin() + fBprojectile);
+                }
             }
         }
     }
