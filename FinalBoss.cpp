@@ -26,37 +26,26 @@ bool FinalBoss::isOverBoard()
     return true;
 }
 
+void FinalBoss::fBchangePos(int x, int y)
+{
+    finalBossLocation.x += x;
+    finalBossLocation.y += y;
+    finalBossShape.setPosition(finalBossLocation.x, finalBossLocation.y);
+}
+
 void FinalBoss::fBmove()
 {
-    int randNum = rand() % 300;
+    if (finalBossLocation.x == 0)
+        dir = 0;
 
-    if (randNum >= 20 and randNum <= 30 and not isOverBoard())
-    {
-        finalBossLocation.x += 20;
-        finalBossLocation.y += 20;
-        finalBossShape.setPosition(finalBossLocation.x, finalBossLocation.y);
-    }
+    if (finalBossLocation.x == 400)
+        dir = 1;
 
-    if (randNum >= 10 and randNum <= 15 and not isOverBoard())
-    {
-        finalBossLocation.x -= 20;
-        finalBossLocation.y -= 20;
-        finalBossShape.setPosition(finalBossLocation.x, finalBossLocation.y);
-    }
+    if (finalBossLocation.x > 0 and dir == 1)
+        fBchangePos(-10, 0);
 
-    if (randNum >= 100 and randNum <= 115 and not isOverBoard())
-    {
-        finalBossLocation.x -= 10;
-        finalBossLocation.y += 30;
-        finalBossShape.setPosition(finalBossLocation.x, finalBossLocation.y);
-    }
-
-    if (randNum >= 200 and randNum <= 230 and not isOverBoard())
-    {
-        finalBossLocation.x += 10;
-        finalBossLocation.y -= 30;
-        finalBossShape.setPosition(finalBossLocation.x, finalBossLocation.y);
-    }
+    if (finalBossLocation.x < 400 and dir == 0)
+        fBchangePos(10, 0);
 }
 
 void FinalBoss::fBHit(int damage)

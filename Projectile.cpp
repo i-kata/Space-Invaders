@@ -3,10 +3,14 @@
 Projectile::Projectile(int x, int y)
 {
     projectileShape.setSize(sf::Vector2f(10, 30));
-    projectileShape.setFillColor(sf::Color::Blue);
     projectileLoc.x = x;
     projectileLoc.y = y;
     projectileShape.setPosition(projectileLoc.x, projectileLoc.y);
+}
+
+void Projectile::setTexture(sf::Texture &texture)
+{
+    projectileShape.setTexture(&texture);
 }
 
 void Projectile::shootShip()
@@ -39,3 +43,4 @@ Location Projectile::getLocation()
 {
     return projectileLoc;
 }
+

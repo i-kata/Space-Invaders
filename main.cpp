@@ -11,6 +11,8 @@
 int main()
 {
     srand(time(NULL));
+    sf::Texture projectileTexture;
+    projectileTexture.loadFromFile("C:\\Users\\Iwan\\CLionProjects\\Space Inavers 2.0\\resources\\bullet.png");
     bool gameRunning = true;
     sf::Event event;
     clock_t beginTime = clock();
@@ -42,9 +44,10 @@ int main()
         {
             for (auto & p : shipProjectiles)
             {
-                window.draw(p.getShape());
+                p.setTexture(projectileTexture);
                 p.shootShip();
                 p.overboard(shipProjectiles);
+                window.draw(p.getShape());
             }
         }
 
@@ -94,6 +97,7 @@ int main()
 
             controller.finalBossHit(finalBoss, shipProjectiles);
             controller.bariesCollision(shipProjectiles, enemyProjectiles, finalBossProjectiles, bariers);
+            controller.spaceshipHit(ship, finalBossProjectiles, gameRunning);
 
             int randNum = rand() % 300;
             if (randNum >= 150 and randNum <= 170)
