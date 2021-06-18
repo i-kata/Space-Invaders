@@ -11,8 +11,6 @@
 int main()
 {
     srand(time(NULL));
-    sf::Texture projectileTexture;
-    projectileTexture.loadFromFile("C:\\Users\\Iwan\\CLionProjects\\Space Inavers 2.0\\resources\\bullet.png");
     bool gameRunning = true;
     sf::Event event;
     clock_t beginTime = clock();
@@ -44,7 +42,6 @@ int main()
         {
             for (auto & p : shipProjectiles)
             {
-                p.setTexture(projectileTexture);
                 p.shootShip();
                 p.overboard(shipProjectiles);
                 window.draw(p.getShape());
@@ -61,9 +58,9 @@ int main()
         {
             for (auto & ep : enemyProjectiles)
             {
-                window.draw(ep.getShape());
                 ep.shootEnemy();
                 ep.overboard(enemyProjectiles);
+                window.draw(ep.getShape());
             }
         }
 
@@ -91,7 +88,7 @@ int main()
         controller.moveBariers(bariers);
         controller.moveEnemies(enemies, duration, executed);
 
-        if (enemies.empty())
+        if (enemies.empty() and gameRunning == true)
         {
             window.draw(finalBoss.getShape());
 
@@ -115,6 +112,7 @@ int main()
             if (finalBoss.getHP() == 0)
                 gameRunning = false;
         }
+
 
         duration = (clock() - beginTime) / (double) CLOCKS_PER_SEC;
 

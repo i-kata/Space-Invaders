@@ -23,12 +23,7 @@ Location SpaceShip::getLocation()
     return shipLoc;
 }
 
-int SpaceShip::getShipDir()
+void SpaceShip::setTexture(sf::Texture &shipTexture)
 {
-    return shipDir;
-}
-
-void SpaceShip::changeShipDir(int dir)
-{
-    shipDir = dir;
+    shipShape.setTexture(&shipTexture);
 }

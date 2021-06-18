@@ -1,4 +1,6 @@
 #include "Projectile.h"
+#include <memory>
+#include <iostream>
 
 Projectile::Projectile(int x, int y)
 {
@@ -6,11 +8,6 @@ Projectile::Projectile(int x, int y)
     projectileLoc.x = x;
     projectileLoc.y = y;
     projectileShape.setPosition(projectileLoc.x, projectileLoc.y);
-}
-
-void Projectile::setTexture(sf::Texture &texture)
-{
-    projectileShape.setTexture(&texture);
 }
 
 void Projectile::shootShip()

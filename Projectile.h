@@ -14,7 +14,6 @@ public:
     void shootShip();
     void shootEnemy();
     sf::RectangleShape getShape();
-    void setTexture(sf::Texture & texture);
     Location getLocation();
     void overboard(std::vector<Projectile> & projectiles);
 };
