@@ -13,6 +13,11 @@ void SpaceShip::moveShip(int x)
     shipShape.setPosition(shipLoc.x, shipLoc.y);
 }
 
+void SpaceShip::setHP(int HP)
+{
+    shipHP = HP;
+}
+
 sf::RectangleShape SpaceShip::getShape()
 {
     return shipShape;
@@ -23,7 +28,8 @@ Location SpaceShip::getLocation()
     return shipLoc;
 }
 
-void SpaceShip::setTexture(sf::Texture &shipTexture)
+int SpaceShip::getHP()
 {
-    shipShape.setTexture(&shipTexture);
+    return shipHP;
 }
+

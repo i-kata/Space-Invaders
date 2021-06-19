@@ -9,13 +9,15 @@ class SpaceShip
 {
     sf::RectangleShape shipShape;
     Location shipLoc;
+    int shipHP;
 
 public:
     explicit SpaceShip(Location & loc);
     void moveShip(int x);
     sf::RectangleShape getShape();
     Location getLocation();
-    void setTexture(sf::Texture &shipTexture);
+    void setHP(int HP);
+    int getHP();
 };
 
 #endif //TEST_SFML_SPACESHIP_H

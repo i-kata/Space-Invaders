@@ -7,6 +7,7 @@
 class Projectile
 {
     sf::RectangleShape projectileShape;
+    sf::Texture projectileTexture;
     Location projectileLoc;
 
 public:

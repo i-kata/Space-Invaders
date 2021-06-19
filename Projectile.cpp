@@ -4,6 +4,8 @@
 
 Projectile::Projectile(int x, int y)
 {
+    projectileTexture.loadFromFile("C:\\Users\\Iwan\\CLionProjects\\Space Inavers 2.0\\resources\\bullet.png");
+    projectileShape.setTexture(&projectileTexture);
     projectileShape.setSize(sf::Vector2f(10, 30));
     projectileLoc.x = x;
     projectileLoc.y = y;

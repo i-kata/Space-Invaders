@@ -9,8 +9,12 @@
 #ifndef TEST_SFML_GAMECONTROLLER_H
 #define TEST_SFML_GAMECONTROLLER_H
 
+enum gameDifficulty {EASY, NORMAL, HARD};
+
 class GameController
 {
+    gameDifficulty gameDifficulty;
+
 public:
     void controlEvents(sf::RenderWindow & window, sf::Event & event, SpaceShip & ship, std::vector<Projectile> & projectiles);
     void projectilesHit(std::vector<Projectile> & projectiles, std::vector<Enemy> & enemies);
@@ -25,6 +29,10 @@ public:
     void bariesCollision(std::vector<Projectile> & shipProjectiles, std::vector<Projectile> & enemyProjectiles, std::vector<Projectile> &finalBossProjectiles, std::vector<Barier> & bariers);
     void spaceshipHit(SpaceShip & spaceShip, std::vector<Projectile> & enemyProjectiles, bool &gameRunning);
     void finalBossHit(FinalBoss &finalBoss, std::vector<Projectile> &shipProjectiles);
+    void controlEventsGF(sf::RenderWindow & window, sf::Event & event, bool & gameRunning);
+    void setGame(enum gameDifficulty gd, std::vector<Enemy> & enemies, SpaceShip &ship);
+    enum gameDifficulty getGD();
+    void isGameRunning(SpaceShip &ship, FinalBoss &fb, sf::RenderWindow &window, sf::Text & text);
 };
 
 #endif

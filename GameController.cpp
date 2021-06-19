@@ -1,6 +1,7 @@
 #include "GameController.h"
 #include "Projectile.h"
 #include "SpaceShip.h"
+#include <SFML/Graphics.hpp>
 #include <iostream>
 
 void GameController::controlEvents(sf::RenderWindow & window, sf::Event & event, SpaceShip & ship, std::vector<Projectile> & projectiles)
@@ -10,8 +11,11 @@ void GameController::controlEvents(sf::RenderWindow & window, sf::Event & event,
         switch (event.type)
         {
             case sf::Event::Closed:
+            {
                 window.close();
+                exit(0);
                 break;
+            }
 
             case sf::Event::KeyPressed:
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -105,7 +109,6 @@ void GameController::spawnEnemiesnR(std::vector<Enemy> &enemies)
             newEnemyLoc.y = 30 + row * 60;
 
             Enemy newEnemy(newEnemyLoc);
-            newEnemy.enemyEstHealth(4);
 
             enemies.push_back(newEnemy);
         }
@@ -287,8 +290,9 @@ void GameController::spaceshipHit(SpaceShip &spaceShip, std::vector<Projectile> 
             enemyProjectiles[p].getLocation().x >= spaceShip.getLocation().x and
             enemyProjectiles[p].getLocation().x <= spaceShip.getLocation().x + 30)
         {
-            gameRunning = false;
+            spaceShip.setHP(spaceShip.getHP() - 2);
             enemyProjectiles.erase(enemyProjectiles.begin() + p);
+            std::cout << "SHIP HIT!" << std::endl;
         }
     }
 }
@@ -303,8 +307,117 @@ void GameController::finalBossHit(FinalBoss &finalBoss, std::vector<Projectile> 
         {
             finalBoss.fBHit(2);
             shipProjectiles.erase(shipProjectiles.begin() + p);
+            std::cout << "BOSS HIT!" << std::endl;
         }
     }
 }
+
+void GameController::setGame(enum gameDifficulty gameDifficulty, std::vector<Enemy> & enemies, SpaceShip & ship)
+{
+    if (gameDifficulty == EASY)
+    {
+        for (auto &enemy : enemies)
+            enemy.enemyEstHealth(2);
+        ship.setHP(10);
+    }
+
+    if (gameDifficulty == NORMAL)
+    {
+        for (auto &enemy : enemies)
+            enemy.enemyEstHealth(4);
+        ship.setHP(6);
+    }
+
+    if (gameDifficulty == HARD)
+    {
+        for (auto &enemy : enemies)
+            enemy.enemyEstHealth(8);
+        ship.setHP(4);
+    }
+}
+
+void GameController::controlEventsGF(sf::RenderWindow &window, sf::Event &event1, bool &gameRunning)
+{
+    while (window.pollEvent(event1))
+    {
+        switch (event1.type)
+        {
+            case sf::Event::Closed:
+            {
+                window.close();
+                exit(0);
+            }
+
+            case sf::Event::MouseButtonPressed:
+            {
+                int mouseX = event1.mouseButton.x;
+                int mouseY = event1.mouseButton.y;
+
+                if (event1.mouseButton.button == sf::Mouse::Left)
+                {
+                    if (mouseX > 200 and mouseX < 400 and mouseY > 200 and mouseY < 250)
+                    {
+                        gameRunning = true;
+                        this->gameDifficulty = EASY;
+                        std::cout << "EASY" << std::endl;
+                    }
+
+                    if (mouseX > 150 and mouseX < 430 and mouseY > 340 and mouseY < 400)
+                    {
+                        gameRunning = true;
+                        this->gameDifficulty = NORMAL;
+                        std::cout << "NORMAL" << std::endl;
+                    }
+
+                    if (mouseX > 200 and mouseX < 400 and mouseY > 470 and mouseY < 550)
+                    {
+                        gameRunning = true;
+                        this->gameDifficulty = HARD;
+                        std::cout << "HARD" << std::endl;
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+}
+
+void GameController::isGameRunning(SpaceShip &ship, FinalBoss &fb, sf::RenderWindow &window, sf::Text & text)
+{
+    if (ship.getHP() == 0)
+    {
+        window.clear();
+        text.setString("YOU LOST!");
+        text.setPosition(240, 270);
+        window.draw(text);
+        window.display();
+        sf::Time time = sf::seconds(2);
+        sf::sleep(time);
+        window.close();
+        exit(0);
+    }
+
+    if (fb.getHP() == 0)
+    {
+        window.clear();
+        text.setString("YOU WON!");
+        text.setPosition(240, 270);
+        window.draw(text);
+        window.display();
+        sf::Time time = sf::seconds(2);
+        sf::sleep(time);
+        window.close();
+        exit(0);
+    }
+}
+
+enum gameDifficulty GameController::getGD()
+{
+    return gameDifficulty;
+}
+
+
 
 

@@ -10,8 +10,18 @@
 
 int main()
 {
+    sf::Texture texture;
+    texture.loadFromFile("C:\\Users\\Iwan\\CLionProjects\\Space Inavers 2.0\\resources\\background.png");
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+
+    sf::Font font;
+    font.loadFromFile("C:\\Users\\Iwan\\CLionProjects\\SNAKE\\resources\\font.ttf");
+    sf::Text text;
+    text.setFont(font);
+
     srand(time(NULL));
-    bool gameRunning = true;
+    bool gameRunning = false;
     sf::Event event;
     clock_t beginTime = clock();
     float duration;
@@ -27,95 +37,107 @@ int main()
     std::vector<Enemy> enemies;
     std::vector<Barier> bariers;
 
-    controller.spawnEnemiesnR(enemies);
-    controller.spawnBariers(bariers);
-
     sf::RenderWindow window(sf::VideoMode(600, 600), "Space Invaders");
     window.setFramerateLimit(30);
 
+    controller.spawnEnemiesnR(enemies);
+    controller.spawnBariers(bariers);
+
     while (window.isOpen())
     {
-        window.clear();
-        window.draw(ship.getShape());
-
-        if (not shipProjectiles.empty())
+        while (not gameRunning)
         {
-            for (auto & p : shipProjectiles)
+            controller.controlEventsGF(window, event, gameRunning);
+            window.clear();
+            window.draw(sprite);
+            window.display();
+        }
+
+        controller.setGame(controller.getGD(), enemies, ship);
+        std::cout << ship.getHP() << " " << enemies[0].getHealth() << std::endl;
+        std::cout << controller.getGD() << std::endl;
+
+        while (gameRunning)
+        {
+            controller.isGameRunning(ship, finalBoss, window, text);
+
+            window.clear();
+            window.draw(ship.getShape());
+
+            if (not shipProjectiles.empty())
             {
-                p.shootShip();
-                p.overboard(shipProjectiles);
-                window.draw(p.getShape());
+                for (auto &p : shipProjectiles)
+                {
+                    p.shootShip();
+                    p.overboard(shipProjectiles);
+                    window.draw(p.getShape());
+                }
             }
-        }
 
-        if (not bariers.empty())
-        {
-            for (auto & b : bariers)
-                window.draw(b.getShape());
-        }
-
-        if (not enemyProjectiles.empty())
-        {
-            for (auto & ep : enemyProjectiles)
+            if (not bariers.empty())
             {
-                ep.shootEnemy();
-                ep.overboard(enemyProjectiles);
-                window.draw(ep.getShape());
+                for (auto &b : bariers)
+                    window.draw(b.getShape());
             }
-        }
 
-        if (not enemies.empty())
-        {
-            for (auto & e : enemies)
+            if (not enemyProjectiles.empty())
             {
-                window.draw(e.getShape());
+                for (auto &ep : enemyProjectiles)
+                {
+                    ep.shootEnemy();
+                    ep.overboard(enemyProjectiles);
+                    window.draw(ep.getShape());
+                }
             }
-        }
 
-        if (not enemies.empty())
-        {
-            int randNum = rand() % (enemies.size() * 10);
-            if (randNum < enemies.size())
+            if (not enemies.empty())
             {
-                enemies[randNum].enemyShoot(enemies[randNum].getLocation(), enemyProjectiles);
+                for (auto &e : enemies)
+                {
+                    window.draw(e.getShape());
+                }
             }
-        }
 
-        controller.controlEvents(window, event, ship, shipProjectiles);
-        controller.projectilesHit(shipProjectiles, enemies);
-        controller.bariesCollision(shipProjectiles, enemyProjectiles, finalBossProjectiles, bariers);
-        controller.spaceshipHit(ship, enemyProjectiles, gameRunning);
-        controller.moveBariers(bariers);
-        controller.moveEnemies(enemies, duration, executed);
+            if (not enemies.empty())
+            {
+                int randNum = rand() % (enemies.size() * 10);
+                if (randNum < enemies.size())
+                {
+                    enemies[randNum].enemyShoot(enemies[randNum].getLocation(), enemyProjectiles);
+                }
+            }
 
-        if (enemies.empty() and gameRunning == true)
-        {
-            window.draw(finalBoss.getShape());
-
-            controller.finalBossHit(finalBoss, shipProjectiles);
+            controller.controlEvents(window, event, ship, shipProjectiles);
+            controller.projectilesHit(shipProjectiles, enemies);
             controller.bariesCollision(shipProjectiles, enemyProjectiles, finalBossProjectiles, bariers);
-            controller.spaceshipHit(ship, finalBossProjectiles, gameRunning);
+            controller.spaceshipHit(ship, enemyProjectiles, gameRunning);
+            controller.moveBariers(bariers);
+            controller.moveEnemies(enemies, duration, executed);
 
-            int randNum = rand() % 300;
-            if (randNum >= 150 and randNum <= 170)
-                finalBoss.fBshootNormProj(finalBossProjectiles);
-
-            finalBoss.fBmove();
-
-            for (auto &p : finalBossProjectiles)
+            if (enemies.empty())
             {
-                p.overboard(finalBossProjectiles);
-                window.draw(p.getShape());
-                p.shootEnemy();
+                controller.isGameRunning(ship, finalBoss, window, text);
+                window.draw(finalBoss.getShape());
+                controller.finalBossHit(finalBoss, shipProjectiles);
+                controller.bariesCollision(shipProjectiles, enemyProjectiles, finalBossProjectiles, bariers);
+                controller.spaceshipHit(ship, finalBossProjectiles, gameRunning);
+
+                int randNum = rand() % 300;
+                if (randNum >= 150 and randNum <= 170)
+                    finalBoss.fBshootNormProj(finalBossProjectiles);
+
+                finalBoss.fBmove();
+
+                for (auto &p : finalBossProjectiles)
+                {
+                    p.overboard(finalBossProjectiles);
+                    window.draw(p.getShape());
+                    p.shootEnemy();
+                }
             }
+                duration = (clock() - beginTime) / (double) CLOCKS_PER_SEC;
 
-            if (finalBoss.getHP() == 0)
-                gameRunning = false;
+            window.display();
         }
-
-
-        duration = (clock() - beginTime) / (double) CLOCKS_PER_SEC;
-
-        window.display();
     }
 }
